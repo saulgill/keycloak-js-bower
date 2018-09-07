@@ -24,8 +24,9 @@
 
         this.init = function () {
             var request = new XMLHttpRequest();
-
-            request.open('GET', keycloak.authServerUrl + '/realms/' + keycloak.realm + '/.well-known/uma2-configuration');
+            /* Changed the open call to be synchronous because it was casuing the config to
+                be lost on the first access to the page. */
+            request.open('GET', keycloak.authServerUrl + '/realms/' + keycloak.realm + '/.well-known/uma2-configuration', false);
             request.onreadystatechange = function () {
                 if (request.readyState == 4) {
                     if (request.status == 200) {
